@@ -15,10 +15,12 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/ethereum (POST)', () => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .post('/ethereum')
+      .send({
+        addresses: ['0x690b9a9e9aa1c9db991c7721a92d351db4fac990'],
+      })
+      .expect(201);
   });
 });
