@@ -23,13 +23,13 @@ describe('EthereumService', () => {
 
   it('should check the address is correct', async () => {
     const addresses = ['0x30824cb687e2768d239c84b69b242d4da9808d32'];
-    const result = await service.create({ addresses });
+    const result = await service.getBalanceSorted({ addresses });
     expect(result.sorted_addresses[0].address).toBe(addresses[0]);
   });
 
   it('should check the address is wrong', async () => {
     const addresses = ['string'];
-    const result = await service.create({ addresses });
+    const result = await service.getBalanceSorted({ addresses });
     expect(result.wrong_addresses[0]).toBe(addresses[0]);
   });
 
@@ -38,7 +38,7 @@ describe('EthereumService', () => {
       '0x30824cb687e2768d239c84b69b242d4da9808d32',
       '0xbd82de7c06f5c2088e05bc93f5998491b11bf81a',
     ];
-    const result = await service.create({ addresses });
+    const result = await service.getBalanceSorted({ addresses });
     expect(result.sorted_addresses[0].address).toBe(addresses[0]);
     expect(result.sorted_addresses[1].address).toBe(addresses[1]);
   });

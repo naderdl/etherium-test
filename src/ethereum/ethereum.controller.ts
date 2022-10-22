@@ -7,7 +7,7 @@ export class EthereumController {
   constructor(private readonly ethereumService: EthereumService) {}
 
   @Post()
-  create(@Body() testEthereumDto: TestEthereumDto) {
-    return this.ethereumService.create(testEthereumDto);
+  getBalanceSorted(@Body() testEthereumDto: TestEthereumDto) {
+    return this.ethereumService.getBalanceSorted(testEthereumDto);
   }
 }

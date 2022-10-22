@@ -15,7 +15,7 @@ export class EthereumService {
     private readonly coinGeckoService: CoinGeckoService,
     @InjectEthersProvider() private readonly baseProvider: BaseProvider,
   ) {}
-  async create(testEthereumDto: TestEthereumDto) {
+  async getBalanceSorted(testEthereumDto: TestEthereumDto) {
     const wrong_addresses = [];
     const right_addresses: {
       address: string;
@@ -23,8 +23,11 @@ export class EthereumService {
       usd_balance: number;
     }[] = [];
     const usdPrice = await this.coinGeckoService.getEthereumToUSD();
+
     for (const address of testEthereumDto.addresses) {
-      if (isAddress(address)) {
+      if (!isAddress(address)) {
+        wrong_addresses.push(address);
+      } else {
         const balance = await this.baseProvider.getBalance(address);
         const balanceAmount = parseFloat(formatEther(balance));
         right_addresses.push({
@@ -32,8 +35,6 @@ export class EthereumService {
           eth_balance: balanceAmount,
           usd_balance: usdPrice * balanceAmount,
         });
-      } else {
-        wrong_addresses.push(address);
       }
     }
 
