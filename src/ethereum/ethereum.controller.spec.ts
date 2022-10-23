@@ -1,4 +1,5 @@
 import { HttpModule } from '@nestjs/axios';
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { BaseProvider, EthersModule, getEthersToken } from 'nestjs-ethers';
 import { CoinGeckoService } from './coinGecko.service';
@@ -10,7 +11,7 @@ describe('EthereumController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [HttpModule, EthersModule.forRoot()],
+      imports: [HttpModule, EthersModule.forRoot(), ConfigModule.forRoot()],
       controllers: [EthereumController],
       providers: [
         EthereumService,

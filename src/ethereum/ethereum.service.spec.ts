@@ -1,4 +1,5 @@
 import { HttpModule } from '@nestjs/axios';
+import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { EthersModule } from 'nestjs-ethers';
 import { CoinGeckoService } from './coinGecko.service';
@@ -10,7 +11,7 @@ describe('EthereumService', () => {
   beforeEach(async () => {
     jest.setTimeout(60000);
     const module: TestingModule = await Test.createTestingModule({
-      imports: [HttpModule, EthersModule.forRoot()],
+      imports: [HttpModule, EthersModule.forRoot(), ConfigModule.forRoot()],
       providers: [EthereumService, CoinGeckoService],
     }).compile();
 

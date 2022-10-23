@@ -1,17 +1,22 @@
 import { Module } from '@nestjs/common';
 import { EthereumService } from './ethereum.service';
 import { EthereumController } from './ethereum.controller';
-// import { EthersModule } from 'src/ethers/ethers.module';
 import { CoinGeckoService } from './coinGecko.service';
 import { HttpModule } from '@nestjs/axios';
 import { EthersModule } from 'nestjs-ethers';
+import { ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     HttpModule,
-    EthersModule.forRoot({
-      network: 'mainnet',
-      infura: '790904b271cd47eaa0eaf574ab606ebd',
-      useDefaultProvider: false,
+    EthersModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          network: configService.get('INFURA_NETWORK'),
+          infura: configService.get('INFURA_ID'),
+          useDefaultProvider: false,
+        };
+      },
     }),
   ],
   controllers: [EthereumController],

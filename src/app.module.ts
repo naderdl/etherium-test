@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { EthereumModule } from './ethereum/ethereum.module';
 
 @Module({
-  imports: [EthereumModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), EthereumModule],
 })
 export class AppModule {}
